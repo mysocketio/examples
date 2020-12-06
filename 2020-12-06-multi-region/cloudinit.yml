@@ -1,0 +1,42 @@
+#cloud-config
+
+users:
+  - default
+  - name: mysocket
+    gecos: mysocket
+    primary_group: mysocket
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    shell: /bin/bash
+    #Uncomment the below and add your public SSH KEY
+    #ssh_authorized_keys:
+    #    - ssh-rsa YOUR PUBLIC SSH KEY
+
+package_update: false
+package_upgrade: false
+ 
+#The BELOW NEEDS TO BE UPDATED WITH YOUR ACCOUNT INFO
+write_files:
+- content: |
+    email=your_my_socket_email
+    password=your_mysocket_passowrd
+    socket_id=your_mysoscket_socket_id
+    giphykey=your_giphy_API_key
+  path: /home/mysocket/mysocket-creds
+  #THe BELOW NEEDS TO BE UPDATED!
+- content: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    PRIVATE KEY you're USING FOR MYSOCKET
+    DATAPLANE
+    -----END OPENSSH PRIVATE KEY-----
+  path: /home/mysocket/.ssh/id_ed25519
+
+
+runcmd:
+  - 'wget https://gist.githubusercontent.com/atoonk/37ef0062fc1d90d31e2fc87e8f12d674/raw/ -O /home/mysocket/run.sh'
+  - 'chown -R mysocket:mysocket /home/mysocket/'
+  - 'chmod 0600 /home/mysocket/mysocket-creds'
+  - 'chmod 0600 /home/mysocket/.ssh/id_ed25519'
+  - 'sudo -u mysocket nohup bash /home/mysocket/run.sh &> out.log &'
+  - 'echo "DONE!" > /tmp/andree'
+
