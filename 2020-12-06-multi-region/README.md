@@ -1,6 +1,6 @@
 This code goes with our blog here:
 
-to run the code your self, start with updating the cloud-init.yml file with your credentials and socket_id. As well as the private key used to authenticate tunnels with.
+to run the code your self, start with updating the cloudinit.yml file with your credentials and socket_id. As well as the private key used to authenticate tunnels with.
 
 ```
  email=your_my_socket_email
